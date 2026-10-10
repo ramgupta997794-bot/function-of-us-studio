@@ -1,0 +1,22 @@
+name: function_of_us_studio
+description: Cinematic math-story graph video generator (Shorts/Reels style).
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  math_expressions: ^3.2.0
+  # 6.x keeps the stable GoogleFonts.spaceGrotesk(textStyle: ...) API.
+  google_fonts: ^6.3.3
+  # ffmpeg-kit upstream was retired in 2025; this is the maintained fork.
+  ffmpeg_kit_flutter_new: ^4.6.7
+  path_provider: ^2.1.6
+  gal: ^2.3.3
+  share_plus: ^13.3.1
+
+flutter:
+  uses-material-design: true
