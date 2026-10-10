@@ -1,0 +1,44 @@
+name: Build APK
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: zulu
+          java-version: "17"
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Scaffold platform folders (keep our lib/main.dart)
+        run: |
+          cp lib/main.dart /tmp/main.dart.bak
+          flutter create --org com.functionofus --project-name function_of_us_studio .
+          cp /tmp/main.dart.bak lib/main.dart
+
+      - name: Add Android permissions
+        run: python3 tool/add_permissions.py
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build release APKs (split per ABI)
+        run: flutter build apk --release --split-per-abi
+
+      - name: Upload APKs
+        uses: actions/upload-artifact@v4
+        with:
+          name: function-of-us-apk
+          path: build/app/outputs/flutter-apk/*.apk
