@@ -634,7 +634,7 @@ class _StudioScreenState extends State<StudioScreen>
     super.initState();
     _c = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: (kTimelineSeconds * 1000).round()),
+      duration: Duration(milliseconds: (kTimelineSeconds * 1000).round()),
     );
     _recompute();
     _c.forward();
